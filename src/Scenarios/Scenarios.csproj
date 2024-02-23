@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C78BE7DA-7351-4D54-AFCE-4AF2EC2F002A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Scenarios</RootNamespace>
+    <AssemblyName>Scenarios</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseScenario.cs" />
+    <Compile Include="Helpers\SegmentHelper.cs" />
+    <Compile Include="Implementations\BallBathScenario.cs" />
+    <Compile Include="Implementations\BoundingVolumeHierarchyScenario.cs" />
+    <Compile Include="Implementations\BoxPyramidScenario.cs" />
+    <Compile Include="Implementations\CombustionEngineScenario.cs" />
+    <Compile Include="Implementations\DominoScenario.cs" />
+    <Compile Include="Implementations\DominoTowerScenario.cs" />
+    <Compile Include="Implementations\PinJointScenario.cs" />
+    <Compile Include="Implementations\MotorbikeScenario.cs" />
+    <Compile Include="Implementations\SpawningBoxesScenario.cs" />
+    <Compile Include="Implementations\SuspendedVehicleScenario.cs" />
+    <Compile Include="Implementations\TankScenario.cs" />
+    <Compile Include="Implementations\VaryingFrictionScenario.cs" />
+    <Compile Include="Implementations\VaryingRestitutionScenario.cs" />
+    <Compile Include="Implementations\VerticalBoxStack.cs" />
+    <Compile Include="Implementations\VerticalCircleStack.cs" />
+    <Compile Include="Implementations\WeldJointScenario.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{850abb40-71cc-4a71-9d5d-62da8f638706}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.csproj">
+      <Project>{44eaee90-2539-41ec-8d9d-7ae59a421bf6}</Project>
+      <Name>Physics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

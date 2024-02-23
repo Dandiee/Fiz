@@ -1,0 +1,1139 @@
+\documentclass{article}
+\usepackage{amsmath}
+\author{Dani}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	left=20mm,
+	top=20mm,
+}
+\begin{document}
+	\part{Physics}
+	\section{Equality constraints}
+	
+	Legyen $C$ a ket test kozott ertelmezett constraint fuggveny
+	$$
+		C(p(t)_1, \alpha(t)_1, p(t)_2, \alpha(t)_2)
+	$$
+	Amennyiben a parameterrekkel $C$ eppen nulla, a constraint kielegitett. Ha a pozicio parameterekkel nem teljeseul a constraint, az azt jelenti, hogy a testek illegalis allapotba kerultek.
+	A constraint gyokei adjak a constraint hiperfeluletet, a legallis alapotvektorok halmazat. A hiperfelulet $s$ dimenzios, ahol $s$ a $C$ fuggveny parametereinek a szama. A hiperfelulet koruli gradiensek azok az iranyok az allapotvektorok halmazaban, amik torik a constraintet. Ha a testek ezen gradiensek menten mozognak, az allapotuk illegalis, ekkor ezen gradiensekkel parhuzamosan mozgatva a testet ujra kielegitheto a constraint.
+	$$ $$
+	A $C$ pozicio constraint ido szerinti dervilatja adja a $C^{'}$ velocity constraitet
+	$$
+		C^{'}=\frac{\partial C}{\partial t}
+	$$
+	Mivel $C$ a pozicio es az orientacio fuggvenye, amik viszont $t$ ido szerinti fuggvenyek, a lanc szabaly szerint derivalni kell oket, igy kapjuk a linearis es angularis sebesseget.
+	$$
+		p^{'}=\frac{\partial p}{\partial t}=v(t)
+		\qquad 
+		\alpha^{'}=\frac{\partial\alpha}{\partial t}=\omega(t)
+	$$
+	A $C$ derivalasa a Jacobian matrixhoz vezet, aminek az egyutthatoja a $v$ sebesseg vektor. Ahol $v$ vektor az erintett testek linearis es angularis vektorai.
+	$$
+		C^{'}=Jv=J
+		\begin{pmatrix}
+			v_1\\
+			\omega_1\\
+			v_2\\
+			\omega_2\\
+		\end{pmatrix}
+	$$
+	
+	$$ $$
+	asdf
+	Constraint
+	\newpage
+	\subsection{Distance Constraint}
+	\subsubsection{Position constraint}
+	Let be $L$ the initial distance between $q_1$ and $q_2$ where $q_1$ and $q_2$ are global points on the two bodies, and $u$ the difference vector from $p_1$ to $p_2$, and $n$ is the unit vector of $u$. $n=\frac{u}{\|u\|}$
+	\begin{align}
+		C &= \|(p_1+r_1) - (p_2+r_2)\|-L = \|q_1 - q_2\|-L\\
+		C &= \|u\|-L
+	\end{align}
+	\subsubsection{Velocity constraint}
+	\begin{align}
+		C^{'} &= (\|u\|-L)^{'}=\|u\|^{'}\\
+		C^{'} &= \frac{1}{2\sqrt{u^2}}(u\cdot u) = \frac{1}{2\sqrt{u^2}}(u\cdot u^{'}+u^{'}\cdot u)\\
+		C^{'} &= \frac{1}{2\sqrt{u^2}}2(u\cdot u^{'}) = \frac{1}{\sqrt{u^2}}(u\cdot u^{'})\\
+		C^{'} &= \frac{u}{u\sqrt{u^2}}\cdot u^{'} = \frac{u}{\|u\|}\cdot u^{'} = n\cdot u^{'}\\
+		C^{'} &= n\cdot (-v_1-(\omega_1\times r_1)-v_2+(\omega_2\times r_2))\\
+		C^{'} &= -n\cdot v_1-n\cdot(\omega_1\times r_1)+v_2+n\cdot(\omega_2\times r_2)\\
+		C^{'} &= \boxed{(-n)}\cdot v_1+\omega_1\cdot\boxed{(r_1\times -n)}+\boxed{(n)}\cdot v_2+\omega_2\cdot\boxed{(r_2\times n)}\\
+	\end{align}
+	\subsubsection{Jacobian matrix}
+	Based on the coeficients of the velocity components in the $C^{'}$, the $J$ matrix is
+	$$ J=
+	\begin{bmatrix}
+		-n & -(r_1\times n) & n & (r_2\times n)
+	\end{bmatrix}
+	 $$
+	\subsubsection{Coeficent of $\lambda$}
+	$$
+		M^{-1}J^T=	
+		\begin{bmatrix}
+			M_1^{-1} 	& 0 		& 0 		& 0\\
+			0 			& I_1^{-1} 	& 0 		& 0\\
+			0 			& 0 		& M_2^{-1} 	& 0\\
+			0 			& 0 		& 0 		& I_2^{-1}
+		\end{bmatrix}
+		\begin{bmatrix}
+			-n\\
+			-(r_1\times n)\\
+			n\\
+			(r_2\times n)
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-nM_1^{-1}\\
+			-I_1^{-1}(r_1\times n)\\
+			nM_2^{-1}\\
+			I_2^{-1}(r_2\times n)
+		\end{bmatrix}
+	$$
+	\subsubsection{Effective mass}
+	\begin{align}
+		M_{eff}&=JM^{-1}J^T=
+		\begin{bmatrix}
+			-n & -(r_1\times n) & n & (r_2\times n)
+		\end{bmatrix}
+		\begin{bmatrix}
+			-nM_1^{-1}\\
+			-I_1^{-1}(r_1\times n)\\
+			nM_2^{-1}\\
+			I_2^{-1}(r_2\times n)
+		\end{bmatrix}\\
+		M_{eff}&=M_1^{-1} + M_2^{-1} + (r_1\times n)^2I_1^{-1} + (r_2\times n)^2I_2^{-1}
+	\end{align}
+	\subsubsection{Linear equation solved for $\lambda$}
+		$$
+			\lambda=-\frac{C^{'}}{M_{eff}}
+		$$
+	\subsubsection{Solved velocity}
+	$$
+		v_{res}=v_{imp}+M^{-1}J^T\lambda=
+		\begin{bmatrix}
+			v_1\\
+			\omega_1\\
+			v2\\
+			\omega_2
+		\end{bmatrix}
+		+\lambda
+		\begin{bmatrix}
+			-nM_1^{-1}\\
+			-I_1^{-1}(r_1\times n)\\
+			nM_2^{-1}\\
+			I_2^{-1}(r_2\times n)
+		\end{bmatrix}=
+		\begin{bmatrix}
+			v_1-\lambda nM_1^{-1}\\
+			\omega_1-\lambda I_1^{-1}(r_1\times n)\\
+			v_2+\lambda nM_2^{-1}\\
+			\omega_2+\lambda I_2^{-1}(r_2\times n)
+		\end{bmatrix}.
+	$$
+	\newpage
+	\subsection{Revolute Constraint}
+	\subsubsection{Position constraint}
+	Let be $r$ a global point and $r_1$ and $r_2$ the difference vectors from $p_1$ and $p_2$.
+	$$
+		C=(p_2+r_2)-(p_1+r_1).
+	$$
+	\subsubsection{Velocity constraint}
+	\begin{align}
+		C^{'}&=((p_2+r_2)-(p_1+r_1))^{'} = (p_2+r_2)^{'}-(p_1+r_1)^{'}\\
+		C^{'}&=(v_2+(\omega_2\times r_2))-(v_1+(\omega_1\times r_1))\\
+		C^{'}&=\boxed{(-1)} v_1\boxed{-[r_1]_\times}\omega_1+\boxed{(1)}v_2+\boxed{[r_2]_\times}\omega_2.
+	\end{align}
+	\subsubsection{Jacobian matrix}
+	Since the dimensions of the coeficent of the components are different we use $\boldsymbol{I_2}$ identity matrix instead of $1$.
+	$$ J=
+		\begin{bmatrix}
+	 		-\boldsymbol{I_2} & -[r_1]_\times & \boldsymbol{I_2} & [r_2]_\times
+		\end{bmatrix}.
+	$$
+	\subsubsection{Coeficent of $\lambda$}
+	$$
+		M^{-1}J^T=	
+		\begin{bmatrix}
+			M_1^{-1} 	& 0 		& 0 		& 0\\
+			0 			& I_1^{-1} 	& 0 		& 0\\
+			0 			& 0 		& M_2^{-1} 	& 0\\
+			0 			& 0 		& 0 		& I_2^{-1}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\boldsymbol{-I_2}\\
+			-[r_1]_\times^T\\
+			\boldsymbol{I_2}\\
+			[r_2]_\times^T
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-M_1^{-1}\boldsymbol{I_2}\\
+			-I_1^{-1}[r_1]_\times^T\\
+			M_2^{-1}\boldsymbol{I_2}\\
+			I_2^{-1}[r_2]_\times^T
+		\end{bmatrix}
+	$$
+	\subsubsection{Effective mass}
+	\begin{align}
+		M_{eff}
+		&=JM^{-1}J^T=
+		\begin{bmatrix}
+			-\boldsymbol{I_2} & -[r_1]_\times & \boldsymbol{I_2} & [r_2]_\times
+		\end{bmatrix}
+		\begin{bmatrix}
+			-M_1^{-1}\boldsymbol{I_2}\\
+			-I_1^{-1}[r_1]_\times^T\\
+			M_2^{-1}\boldsymbol{I_2}\\
+			I_2^{-1}[r_2]_\times^T
+		\end{bmatrix}\\
+		&=
+		\boldsymbol{I_2}(M_1^{-1}+M_2^{-1})+I_1^{-1}[r_1]_\times[r_1]_\times^T+I_2^{-1}[r_2]_\times[r_2]_\times^T=\\
+		&=
+		\boldsymbol{I_2}(M_1^{-1}+M_2^{-1})
+		+
+		\begin{bmatrix}
+			I_1^{-1}r_{1_y}^2		& -I_1^{-1}r_{1_x}r_{1_y}\\
+			-I_1^{-1}r_{1_x}r_{1_y}	& I_1^{-1}r_{1_x}^2
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			I_2^{-1}r_{2_y}^2		& -I_2^{-1}r_{2_x}r_{2_y}\\
+			-I_2^{-1}r_{2_x}r_{2_y}	& I_2^{-1}r_{2_x}^2
+		\end{bmatrix}=\\
+		&=
+		\begin{bmatrix}
+			M_1^{-1}+M_2^{-1} + I_1^{-1}r_{1_y}^2 + I_2^{-1}r_{2_y}^2		& -I_1^{-1}r_{1_x}r_{1_y} - I_2^{-1}r_{2_x}r_{2_y}\\
+			-I_1^{-1}r_{1_x}r_{1_y} - I_2^{-1}r_{2_x}r_{2_y}	& M_1^{-1}+M_2^{-1} + I_1^{-1}r_{1_x}^2 +  I_2^{-1}r_{2_x}^2
+		\end{bmatrix}
+	\end{align}
+	\subsubsection{Linear equation solved for $\lambda$}
+	$$
+	\lambda=-\frac{C^{'}}{M_{eff}}
+	$$
+	\subsubsection{Solved velocity}
+	\begin{align*}
+		v_{res}&=v_{imp}+M^{-1}J^T\lambda=
+		\begin{bmatrix}
+			v_1\\
+			\omega_1\\
+			v2\\
+			\omega_2
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			-M_1^{-1}\lambda\boldsymbol{I_2}\\
+			-I_1^{-1}\lambda[r_1]_\times^T\\
+			M_2^{-1}\lambda\boldsymbol{I_2}\\
+			I_2^{-1}\lambda[r_2]_\times^T
+		\end{bmatrix}\\
+		&=
+		\begin{bmatrix}
+			v_1\\
+			\omega_1\\
+			v2\\
+			\omega_2
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			-\lambda M_1^{-1}\\
+			-I_1^{-1}(r_1\times \lambda)\\
+			\lambda M_2^{-1}\\
+			I_2^{-1}(r_2\times \lambda))
+		\end{bmatrix}.
+	\end{align*}
+	\newpage
+	\subsection{Line Constraint}
+	\subsubsection{Position constraint}
+	Let be $r_1$ and $r_2$ two points from two bodies, and $n$ unit vector. The $t$ vector is tangent of the $n$.
+	\begin{align*}
+		C &= t\cdot((p_2+r_2)-(p_1+r_1))\\
+		C &= t\cdot(q_2-q_1)\\
+		C &= t\cdot u
+	\end{align*}
+	\subsubsection{Velocity constraint}
+	\begin{align*}
+		C &= (t\cdot u)^{'} = t\cdot u^{'} + t^{'}\cdot u\\
+		C &= t\cdot (v_2+(\omega_2\times r_2)-v_1-(\omega_1\times r_1)) + (\omega_1\times t)\\
+		C &= t\cdot v_2+ t\cdot (\omega_2\times r_2)- t\cdot v_1-t\cdot (\omega_1\times r_1) + u\cdot(\omega_1\times t)\\
+		C &= t\cdot v_2+ \omega_2\cdot (r_2\times t)- t\cdot v_1-\omega_1\cdot (r_1\times t) + \omega_1\cdot(t\times u)\\
+		C &= \boxed{(-t)}\cdot v_1 + \omega_1\cdot\boxed{(t\times(r_1+u))} +\boxed{(t)}\cdot v_2+ \omega_2\cdot \boxed{(r_2\times t)}\\
+	\end{align*}
+	\subsubsection{Jacobian matrix}
+		$$
+			J = 
+			\begin{bmatrix}
+				-t & (t\times(r_1+u)) & t & (r_2\times t)
+			\end{bmatrix}
+		$$
+	\subsubsection{Coeficent of $\lambda$}
+		$$
+			M^{-1}J^T=	
+			\begin{bmatrix}
+				M_1^{-1} 	& 0 		& 0 		& 0\\
+				0 			& I_1^{-1} 	& 0 		& 0\\
+				0 			& 0 		& M_2^{-1} 	& 0\\
+				0 			& 0 		& 0 		& I_2^{-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				-t\\
+				(t\times(r_1+u))\\
+				t\\
+				(r_2\times t)
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				-M_1^{-1}t\\
+				I_1^{-1}(t\times(r_1+u))\\
+				M_2^{-1}t\\
+				I_2^{-1}(r_2\times t)
+			\end{bmatrix}
+		$$
+	\subsubsection{Effective mass}
+	\begin{align}
+		M_{eff}
+		&=JM^{-1}J^T=
+		\begin{bmatrix}
+			-t & (t\times(r_1+u)) & t & (r_2\times t)
+		\end{bmatrix}
+		\begin{bmatrix}
+			-M_1^{-1}t\\
+			I_1^{-1}(t\times(r_1+u))\\
+			M_2^{-1}t\\
+			I_2^{-1}(r_2\times t)
+		\end{bmatrix}\\
+		&=M_1^{-1}+(t\times(r_1+u))^2I_1^{-1}+M_2^{-1}+(r_2\times t)^2I_2^{-1}
+	\end{align}
+	\subsubsection{Linear equation solved for $\lambda$}
+		$$
+			\lambda=-\frac{C^{'}}{M_{eff}}
+		$$
+	\subsubsection{Solved velocity}
+	$$
+		v_{res}=v_{imp}+M^{-1}J^T\lambda=
+		\begin{bmatrix}
+			v_1\\
+			\omega_1\\
+			v2\\
+			\omega_2
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			-\lambda M_1^{-1}t\\
+			\lambda I_1^{-1}(t\times(r_1+u))\\
+			\lambda M_2^{-1}t\\
+			\lambda I_2^{-1}(r_2\times t)
+		\end{bmatrix}\\
+	$$
+	\newpage
+		\subsection{Linear Motor Constraint}
+		\subsubsection{Position constraint}
+		Let be $r_1$ and $r_2$ two points from two bodies, and $n$ unit vector.
+		\begin{align*}
+			C &= n\cdot((p_2+r_2)-(p_1+r_1))\\
+			C &= n\cdot(q_2-q_1)\\
+			C &= n\cdot u
+		\end{align*}
+		\subsubsection{Velocity constraint}
+		\begin{align*}
+		C &= (n\cdot u)^{'} = n\cdot u^{'} + n^{'}\cdot u\\
+		C &= n\cdot (v_2+(\omega_2\times r_2)-v_1-(\omega_1\times r_1)) + (\omega_1\times n)\\
+		C &= n\cdot v_2+ n\cdot (\omega_2\times r_2)- n\cdot v_1-n\cdot (\omega_1\times r_1) + u\cdot(\omega_1\times n)\\
+		C &= n\cdot v_2+ \omega_2\cdot (r_2\times n)- n\cdot v_1-\omega_1\cdot (r_1\times n) + \omega_1\cdot(n\times u)\\
+		C &= \boxed{(-n)}\cdot v_1 + \omega_1\cdot\boxed{(n\times(r_1+u))} +\boxed{(n)}\cdot v_2+ \omega_2\cdot \boxed{(r_2\times n)}\\
+		\end{align*}
+		\subsubsection{Jacobian matrix}
+		$$
+		J = 
+		\begin{bmatrix}
+		-n & (n\times(r_1+u)) & n & (r_2\times n)
+		\end{bmatrix}
+		$$
+		\subsubsection{Coeficent of $\lambda$}
+		$$
+		M^{-1}J^T=	
+		\begin{bmatrix}
+		M_1^{-1} 	& 0 		& 0 		& 0\\
+		0 			& I_1^{-1} 	& 0 		& 0\\
+		0 			& 0 		& M_2^{-1} 	& 0\\
+		0 			& 0 		& 0 		& I_2^{-1}
+		\end{bmatrix}
+		\begin{bmatrix}
+		-n\\
+		(n\times(r_1+u))\\
+		n\\
+		(r_2\times n)
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+		-M_1^{-1}n\\
+		I_1^{-1}(n\times(r_1+u))\\
+		M_2^{-1}n\\
+		I_2^{-1}(r_2\times n)
+		\end{bmatrix}
+		$$
+		\subsubsection{Effective mass}
+		\begin{align}
+		M_{eff}
+		&=JM^{-1}J^T=
+		\begin{bmatrix}
+		-n & (n\times(r_1+u)) & n & (r_2\times n)
+		\end{bmatrix}
+		\begin{bmatrix}
+		-M_1^{-1}n\\
+		I_1^{-1}(n\times(r_1+u))\\
+		M_2^{-1}n\\
+		I_2^{-1}(r_2\times n)
+		\end{bmatrix}\\
+		&=M_1^{-1}+(n\times(r_1+u))^2I_1^{-1}+M_2^{-1}+(r_2\times n)^2I_2^{-1}
+		\end{align}
+		\subsubsection{Linear equation solved for $\lambda$}
+		$$
+		\lambda=-\frac{C^{'}}{M_{eff}}
+		$$
+		\subsubsection{Solved velocity}
+		$$
+		v_{res}=v_{imp}+M^{-1}J^T\lambda=
+		\begin{bmatrix}
+		v_1\\
+		\omega_1\\
+		v2\\
+		\omega_2
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+		-\lambda M_1^{-1}n\\
+		\lambda I_1^{-1}(n\times(r_1+u))\\
+		\lambda M_2^{-1}n\\
+		\lambda I_2^{-1}(r_2\times n)
+		\end{bmatrix}\\
+		$$
+		\newpage
+	\subsection{Angle Constraint}
+	\subsubsection{Position constraint}
+	Let be $\alpha_{ref}$ the initial angle between two bodies
+		$$
+			C=\alpha_2-\alpha_1-\alpha_{ref}
+		$$
+	\subsubsection{Velocity constraint}
+		$$
+			C^{'}=\omega_2-\omega_1
+		$$
+	\subsubsection{Jacobian matrix}6
+		$$
+			J =
+			\begin{bmatrix}
+				0 & -1 & 0 & 1	
+			\end{bmatrix}
+		$$
+	\subsubsection{Coeficent of $\lambda$}
+		$$
+			M^{-1}J^T=	
+			\begin{bmatrix}
+				M_1^{-1} 	& 0 		& 0 		& 0\\
+				0 			& I_1^{-1} 	& 0 		& 0\\
+				0 			& 0 		& M_2^{-1} 	& 0\\
+				0 			& 0 		& 0 		& I_2^{-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				0\\
+				-1\\
+				0\\
+				1
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				0\\
+				-I_1^{-1}\\
+				0\\
+				I_2^{-1}
+			\end{bmatrix}
+		$$
+	\subsubsection{Effective mass}
+		$$
+			M_{eff}=JM^{-1}J^T=
+			\begin{bmatrix}
+				0 & -1 & 0 & 1
+			\end{bmatrix}
+			\begin{bmatrix}
+				0\\
+				-I_1^{-1}\\
+				0\\
+				I_2^{-1}
+			\end{bmatrix}
+			=I_2^{-1}+I_1^{-1}
+		$$
+	\subsubsection{Linear equation solved for $\lambda$}
+		$$
+			\lambda=-\frac{C^{'}}{M_{eff}}
+		$$
+	\subsubsection{Solved velocity}
+		$$
+			v_{res}=v_{imp}+M^{-1}J^T\lambda=
+			\begin{bmatrix}
+			v_1\\
+			\omega_1\\
+			v2\\
+			\omega_2
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				0\\
+				-\lambda I_1^{-1}\\
+				0\\
+				\lambda I_2^{-1}
+			\end{bmatrix}\\
+		$$
+	\newpage
+	\subsection{Prismatic Constraint}
+	\subsubsection{Position constraint}
+	The prismatic contstrat is the combination of the angle and line joint
+		$$
+			C=
+			\begin{bmatrix}
+				C_{line}\\
+				C_{angle}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				t\cdot u\\
+				\alpha_1-\alpha_2-\alpha_{ref}
+			\end{bmatrix}
+		$$
+	\subsubsection{Velocity constraint}
+		$$
+			C^{'}=
+			\begin{bmatrix}
+				C_{line}^{'}\\
+				C_{angle}^{'}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				t^T\cdot v_2+ \omega_2\cdot (r_2\times t)- t^T\cdot v_1-\omega_1\cdot (r_1\times t) + \omega_1\cdot(t\times u)\\
+				\omega_1-\omega_2
+			\end{bmatrix}
+		$$
+	\subsubsection{Jacobian matrix}
+		$$
+			J=
+			\begin{bmatrix}
+				J_{line}\\
+				J_{angle}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				-t		& (t\times(r_1+u))		& t	& (r_2\times t)\\
+				0		& 1						& 0	& -1
+			\end{bmatrix}
+		$$
+	\subsubsection{Coeficent of $\lambda$}
+	$$
+		M^{-1}J^T=	
+		\begin{bmatrix}
+			M_1^{-1} 	& 0 		& 0 		& 0\\
+			0 			& I_1^{-1} 	& 0 		& 0\\
+			0 			& 0 		& M_2^{-1} 	& 0\\
+			0 			& 0 		& 0 		& I_2^{-1}
+		\end{bmatrix}
+		\begin{bmatrix}
+			-t					& 0\\
+			(t\times(r_1+u))	& 1\\
+			t					& 0\\
+			(r_2\times t)		& -1
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-tM_1^{-1}					& 0\\
+			I_1^{-1}(t\times(r_1+u))	& I_1^{-1}\\
+			tM_2^{-1}					& 0\\
+			I_2^{-1}(r_2\times t)		& -I_2^{-1}
+		\end{bmatrix}
+	$$
+	\subsubsection{Effective mass}
+	\begin{align*}
+		M_{eff}&=JM^{-1}J^T=
+		\begin{bmatrix}
+			-t	& (t\times(r_1+u))	& t	& (r_2\times t)\\
+			0	& 1					& 0	& -1
+		\end{bmatrix}
+		\begin{bmatrix}
+			-tM_1^{-1}					& 0\\
+			I_1^{-1}(t\times(r_1+u))	& I_1^{-1}\\
+			tM_2^{-1}					& 0\\
+			I_2^{-1}(r_2\times t)		& -I_2^{-1}
+		\end{bmatrix}\\
+		&=
+		\begin{bmatrix}
+			(M_1^{-1} + I_1^{-1}(t\times(r_1+u))^2 + M_2^{-1} + I_2^{-1}(r_2\times t)^2 & (t\times(r_1+u))I_1^{-1} - I_2^{-1}(r_2\times t)\\
+			I_1^{-1}(t\times(r_1+u)) - I_2^{-1}(r_2\times t) & I_1^{-1} + I_2^{-1}
+		\end{bmatrix}
+	\end{align*}
+	\subsubsection{Linear equation solved for $\lambda$}
+		$$
+		\lambda=-\frac{C^{'}}{M_{eff}}
+		$$
+	\subsubsection{Solved velocity}
+		$$
+			v_{res}=v_{imp}+M^{-1}J^T\lambda=
+			\begin{bmatrix}
+				v_1\\
+				\omega_1\\
+				v2\\
+				\omega_2
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				-tM_1^{-1}					& 0\\
+				I_1^{-1}(t\times(r_1+u))	& I_1^{-1}\\
+				tM_2^{-1}					& 0\\
+				I_2^{-1}(r_2\times t)		& -I_2^{-1}
+			\end{bmatrix}
+			\lambda
+			=
+			\begin{bmatrix}
+				-tM_1^{-1}\lambda_1\\
+				I_1^{-1}(t\times(r_1+u))\lambda_1 + I_1^{-1}\lambda_2\\
+				tM_2^{-1}\lambda_1\\
+				I_2^{-1}(r_2\times t)\lambda_1 - I_2^{-1}\lambda_2
+			\end{bmatrix}
+		$$
+	\newpage
+	\subsection{Weld Constraint}
+	\subsubsection{Position constraint}
+	The weld contstrat is the combination of the revolute and angle constraints
+		$$
+			C=
+			\begin{bmatrix}
+				C_{revolute}\\
+				C_{angle}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				(p_1+r_1)-(p_2+r_2)\\
+				\alpha_1-\alpha_2-\alpha_{ref}
+			\end{bmatrix}
+		$$
+	\subsubsection{Velocity constraint}
+		$$
+			C^{'}=
+			\begin{bmatrix}
+				C_{revolute}^{'}\\
+				C_{angle}^{'}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				(v_1+(\omega_1\times r_1))-(v_2+(\omega_2\times r_2))\\
+				\omega_1-\omega_2
+			\end{bmatrix}
+		$$
+	\subsubsection{Jacobian matrix}
+		$$
+		J=
+		\begin{bmatrix}
+			J_{revolute}\\
+			J_{angle}
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-\boldsymbol{I_2}	& -[r_1]_\times	& \boldsymbol{I_2}	& [r_2]_\times\\
+			0					& 1			 	& 0					& -1
+		\end{bmatrix}
+		$$
+	\subsubsection{Coeficent of $\lambda$}
+		$$
+			M^{-1}J^T =
+			\begin{bmatrix}
+				M_1^{-1} 	& 0 		& 0 		& 0\\
+				0 			& I_1^{-1} 	& 0 		& 0\\
+				0 			& 0 		& M_2^{-1} 	& 0\\
+				0 			& 0 		& 0 		& I_2^{-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				-\boldsymbol{I_2}	&  0\\
+				-[r_1]_\times^T		&  1\\
+				\boldsymbol{I_2}	&  0\\
+				[r_2]_\times^T 	& -1
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				-\boldsymbol{I_2}M_1^{-1} & 0\\
+				\begin{bmatrix}
+					r_{1_y}I_1^{-1} & -r_{1_x}I_1^{-1}
+				\end{bmatrix} 
+				& I_1^{-1}\\
+				\boldsymbol{I_2}M_2^{-1} & 0\\
+				\begin{bmatrix}
+					-r_{2_y}I_2^{-1} & r_{2_x}I_2^{-1}
+				\end{bmatrix} 
+				& -I_2^{-1}
+			\end{bmatrix}
+		$$
+	\subsubsection{Effective mass}
+		\begin{align*}		
+		M_{eff} &= JM^{-1}J^T =
+					\begin{bmatrix}
+						-\boldsymbol{I_2}	& -[r_1]_\times	& \boldsymbol{I_2}	& [r_2]_\times\\
+						0					& 1			 	& 0					& -1
+					\end{bmatrix}
+					\begin{bmatrix}
+						-\boldsymbol{I_2}M_1^{-1}	& 0\\
+						-[r_1]_\times^TI_1^{-1}		& I_1^{-1}\\
+						\boldsymbol{I_2}M_2^{-1}	& 0\\
+						[r_2]_\times^TI_1^{-1}		& -I_2^{-1}
+					\end{bmatrix}\\
+				&=
+\begin{bmatrix}
+\boldsymbol{I_2}(M_1^{-1} + M_2^{-1}) + [r_1]_\times[r_1]_\times^TI_1^{-1} + [r_2]_\times[r_2]_\times^TI_1^{-1} & -[r_1]_\times I_1^{-1} - [r_2]_\times I_2^{-1}\\
+-[r_1]_\times^TI_1^{-1} - [r_2]_\times^TI_1^{-1} & I_1^{-1} + I_2^{-1}
+\end{bmatrix}\\
+				&= E
+					\begin{bmatrix}
+						\begin{bmatrix}
+							M_1^{-1} + M_2^{-1} + r_{1_y}^2I_1^{-1} + r_{2_y}^2I_2^{-1}	& -r_{1_y}r_{1_x}I_1^{-1} - r_{2_y}r_{2_x}I_2^{-1}\\
+							-r_{1_y}r_{1_x}I_1^{-1} - r_{2_y}r_{2_x}I_2^{-1}			&  M_1^{-1} + M_2^{-1} + r_{1_x}^2I_1^{-1} + r_{2_x}^2I_2^{-1}
+						\end{bmatrix}
+						&
+						\begin{bmatrix}
+							r_{1_y}I_1^{-1} - r_{2_y}I_2^{-1}\\
+							r_{2_x}I_2^{-1} - r_{1_x}I_1^{-1}
+						\end{bmatrix}\\
+						\begin{bmatrix} 
+							r_{1_y}I_1^{-1} + r_{2_y}I_2^{-1} & -r_{1_x}I_1^{-1} - r_{2_x}I_2^{-1}
+						\end{bmatrix}
+						&
+						I_1^{-1} + I_2^{-1}
+					\end{bmatrix}\\
+				&=
+					\begin{bmatrix}
+						M_1^{-1} + M_2^{-1} + r_{1_y}^2I_1^{-1} + r_{2_y}^2I_2^{-1} & -r_{1_y}r_{1_x}I_1^{-1} - r_{2_y}r_{2_x}I_2^{-1}				& r_{1_y}I_1^{-1} - r_{2_y}I_2^{-1}\\
+						-r_{1_y}r_{1_x}I_1^{-1} - r_{2_y}r_{2_x}I_2^{-1}			& M_1^{-1} + M_2^{-1} + r_{1_x}^2I_1^{-1} + r_{2_x}^2I_2^{-1}	& r_{2_x}I_2^{-1} - r_{1_x}I_1^{-1}\\
+						r_{1_y}I_1^{-1} + r_{2_y}I_2^{-1}							& -r_{1_x}I_1^{-1} - r_{2_x}I_2^{-1}							& I_1^{-1} + I_2^{-1}
+					\end{bmatrix}
+	\end{align*}
+	\subsubsection{Linear equation solved for $\lambda$}
+		$$
+			\lambda=-\frac{C^{'}}{M_{eff}}
+		$$
+	\subsubsection{Solved velocity}
+		$$
+			v_{res}=v_{imp}+M^{-1}J^T\lambda=
+			\begin{bmatrix}
+				v_1\\
+				\omega_1\\
+				v2\\
+				\omega_2
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				-\boldsymbol{I_2}M_1^{-1} & 0\\
+				\begin{bmatrix}
+					r_{1_y}I_1^{-1} & -r_{1_x}I_1^{-1}
+				\end{bmatrix} 
+				& I_1^{-1}\\
+				\boldsymbol{I_2}M_2^{-1} & 0\\
+				\begin{bmatrix}
+					-r_{2_y}I_2^{-1} & r_{2_x}I_2^{-1}
+				\end{bmatrix} 
+				& -I_2^{-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				\begin{pmatrix}
+					\lambda_1\\
+					\lambda_2\\
+				\end{pmatrix}\\
+				\lambda_3
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				-
+				\begin{pmatrix}
+					\lambda_1\\
+					\lambda_2\\
+				\end{pmatrix}M_1^{-1}\\
+				\lambda_1r_{1_y}I_1^{-1} - \lambda_2r_{1_x}I_1^{-1} + I_1^{-1}\lambda_3\\
+				\begin{pmatrix}
+					\lambda_1\\
+					\lambda_2\\
+				\end{pmatrix}M_2^{-1}\\
+				\lambda_2r_{2_x}I_2^{-1} - \lambda_1r_{2_y}I_2^{-1} - I_2^{-1}\lambda_3
+			\end{bmatrix}
+		$$
+		\newpage
+		\subsection{Pulley Constraint}
+				Let be $r_1$ and $r_2$ points on $body_1$ and $body_2$, $a_1$ and $a_2$ global anchor points for the bodies. The difference vector between $a_i$ and $r_1$ is $u_i$ and the lengh of the $u_i$ is $l_i$. $r$ is the ratio between the two anchor points.
+				$$
+						u_i = r_i - a_i
+							\qquad 
+						l_i = \| u_i \| = \sqrt{ u_i \cdot u_i }
+							\qquad 
+						n_i = \frac{u_i}{\| u_i \|}
+				$$
+				The initial distances saved in $C_i$ and it helps to obtain the distance of the bodies
+				\begin{align*}
+					C_i &= r\| r_1 - a_1 \| + \| r_2 + a_2 \| = r\| u_1 \| + \| u_2 \|\\
+					C_i &= rl_1 + l_2\\
+				\end{align*}
+		\subsubsection{Position constraint}
+		\begin{align*}
+			C &= C_i - ( rl_1 + l_2 )\\
+		\end{align*}
+		\subsubsection{Velocity constraint}
+		First find $l_i^{'}$ and use it in $C^{'}$ because of the chain rule
+			\begin{align*}
+				l_i^{'} &= \| u_i \|^{'} = (\sqrt{ u_i \cdot u_i })^{'}
+						= \frac{ 1 }{ 2 \sqrt{ u_i \cdot u_i } } (u_i \cdot u_i)^{'}\\
+				l_i^{'} &= \frac{ 1 }{ 2 \sqrt{ u_i \cdot u_i } } (u_i \cdot u_i^{'} + u_i^{'} \cdot u_i )
+						= \frac{ 1 }{ 2 \sqrt{ u_i \cdot u_i } } 2(u_i \cdot u_i^{'})\\
+				l_i^{'} &= \frac{ 1 }{ \sqrt{ u_i \cdot u_i } } (u_i \cdot u_i^{'})
+						= \frac{ u_i }{ \| u_i \| } u_i^{'}
+						= n_i \cdot u_i^{'}
+						= n_i \cdot (v_i + (\omega_i \times r_i)).\\
+				C^{'} &= (C_i - ( rl_1 + l_2 ))^{'} 
+						= (0 - ( rl_1 + l_2 ))^{'}
+						= -rl_1^{'} -l_2^{'}\\
+				C^{'} &= -rn_1 \cdot (v_1 + (\omega_1 \times r_1)) - n_2 \cdot (v_2 + (\omega_2 \times r_2))\\
+				C^{'} &= \boxed{(-rn_1)} \cdot v_1 + \omega_1 \cdot \boxed{ r(r_1 \times -n_1) } + \boxed{(-n_2)} \cdot v_2 + \omega_2 \cdot \boxed{ (r_2 \times -n_2) }
+			\end{align*}
+		\subsubsection{Jacobian matrix}
+		$$
+		J =
+			\begin{bmatrix}
+				-rn_1 & -r(r_1 \times n_1) & -n_2 & -(r_2 \times n_2)	
+			\end{bmatrix}
+		$$
+		\subsubsection{Coeficent of $\lambda$}
+		$$
+		M^{-1}J^T=	
+		\begin{bmatrix}
+			M_1^{-1} 	& 0 		& 0 		& 0\\
+			0 			& I_1^{-1} 	& 0 		& 0\\
+			0 			& 0 		& M_2^{-1} 	& 0\\
+			0 			& 0 		& 0 		& I_2^{-1}
+		\end{bmatrix}
+		\begin{bmatrix}
+			-rn_1\\
+			-r(r_1 \times n_1)\\
+			-n_2\\
+			-(r_2 \times n_2)
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-M_1^{-1}rn_1\\
+			-I_1^{-1}r(r_1 \times n_1)\\
+			-M_2^{-1}n_2\\
+			-I_2^{-1}(r_2 \times n_2)
+		\end{bmatrix}
+		$$
+		\subsubsection{Effective mass}
+		\begin{align*}
+			M_{eff}	&= JM^{-1}J^T =
+				\begin{bmatrix}
+					-rn_1 & -r(r_1 \times n_1) & -n_2 & -(r_2 \times n_2)
+				\end{bmatrix}
+				\begin{bmatrix}
+					-M_1^{-1}rn_1\\
+					-I_1^{-1}r(r_1 \times n_1)\\
+					-M_2^{-1}n_2\\
+					-I_2^{-1}(r_2 \times n_2)
+				\end{bmatrix}\\
+			&= M_1^{-1}r^2 + M_2^{-1} + r^2I_1^{-1}(r_1 \times n_1)^2 + I_2^{-1}(r_2 \times n_2)^2
+		\end{align*}
+		\subsubsection{Solved velocity}
+		$$
+			v_{res}=v_{imp}+M^{-1}J^T\lambda=
+			\begin{bmatrix}
+				v_1\\
+				\omega_1\\
+				v2\\
+				\omega_2
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				-M_1^{-1}rn_1\lambda\\
+				-I_1^{-1}r(r_1 \times n_1)\lambda\\
+				-M_2^{-1}n_2\lambda\\
+				-I_2^{-1}(r_2 \times n_2)\lambda
+			\end{bmatrix}\\
+		$$
+	\newpage
+	\subsection{Motored Revolute Constraint}
+	The motored revolute constraint is a hybrid constraint, which is a combination of revolute and a angle joint
+	\subsubsection{Position constraint}
+		$$
+			C=
+				\begin{bmatrix}
+					C_{revolute}\\
+					C_{angle}
+				\end{bmatrix}
+			=
+				\begin{bmatrix}
+					(p_2+r_2)-(p_1+r_1)\\
+					\alpha_2-\alpha_1-\alpha_{target}
+					\end{bmatrix}
+		$$
+	\subsubsection{Velocity constraint}
+		$$
+			C^{'}=
+				\begin{bmatrix}
+					C_{revolute}^{'}\\
+					C_{angle}^{'}
+				\end{bmatrix}
+				=
+				\begin{bmatrix}
+					(v_2+(\omega_2\times r_2))-(v_1+(\omega_1\times r_1))\\
+					\omega_2-\omega_1
+				\end{bmatrix}
+		$$
+	\subsubsection{Jacobian matrix}
+		$$
+			J=
+				\begin{bmatrix}
+					J_{revolute}\\
+					J_{angle}
+				\end{bmatrix}
+				=
+				\begin{bmatrix}
+					-\boldsymbol{I_2} & -[r_1]_\times & \boldsymbol{I_2} & [r_2]_\times\\
+					0 & -1 & 0 & 1
+				\end{bmatrix}
+		$$
+	\subsubsection{Coeficent of $\lambda$}
+		$$
+			M^{-1}J^T=	
+				\begin{bmatrix}
+					M_1^{-1} 	& 0 		& 0 		& 0\\
+					0 			& I_1^{-1} 	& 0 		& 0\\
+					0 			& 0 		& M_2^{-1} 	& 0\\
+					0 			& 0 		& 0 		& I_2^{-1}
+				\end{bmatrix}
+				\begin{bmatrix}
+					-\boldsymbol{I_2} & 0\\
+					-[r_1]_\times^T & -1\\
+					\boldsymbol{I_2} & 0\\
+					[r_2]_\times^T & 1
+				\end{bmatrix}
+				=
+				\begin{bmatrix}
+					-M_1^{-1}\boldsymbol{I_2} & 0\\
+					-I_1^{-1}[r_1]_\times^T & -I_1^{-1}\\
+					M_2^{-1}\boldsymbol{I_2} & 0\\
+					I_2^{-1}[r_2]_\times^T & I_2^{-1}
+				\end{bmatrix}
+		$$
+	\subsubsection{Effective mass}
+		\begin{align*}
+			M_{eff}
+				&=JM^{-1}J^T=
+				\begin{bmatrix}
+					-\boldsymbol{I_2} & -[r_1]_\times & \boldsymbol{I_2} & [r_2]_\times\\
+					0 & -1 & 0 & 1
+				\end{bmatrix}
+				\begin{bmatrix}
+					-M_1^{-1}\boldsymbol{I_2} & 0\\
+					-I_1^{-1}[r_1]_\times^T & -I_1^{-1}\\
+					M_2^{-1}\boldsymbol{I_2} & 0\\
+					I_2^{-1}[r_2]_\times^T & I_2^{-1}
+				\end{bmatrix}\\
+				&=
+				\begin{bmatrix}
+					\boldsymbol{I_2}(M_1^{-1} + M_2^{-1}) + I_1^{-1}[r_1]_\times [r_1]_\times^T + I_2^{-1}[r_2]_\times [r_2]_\times^T 
+						& I_1^{-1}[r_1]_\times + I_2^{-1}[r_2]_\times\\
+					I_1^{-1}[r_1]_\times^T + I_2^{-1}[r_2]_\times^T & I_1^{-1} + I_2^{-1}
+				\end{bmatrix}\\
+				&=
+				\begin{bmatrix}
+					\begin{bmatrix}
+						M_1^{-1} + M_2^{-1} + I_1^{-1}r_{1_y}^2 + I_2^{-1}r_{2_y}^2 & -I_1^{-1}r_{1_y}r_{1_x} - I_2^{-1}r_{2_y}r_{2_x}\\
+						-I_1^{-1}r_{1_x}r_{1_y}-I_2^{-1}r_{2_x}r_{2_y} & M_1^{-1} + M_2^{-1} + I_1^{-1}r_{1_x}^2 +  I_2^{-1}r_{2_x}^2
+					\end{bmatrix}	
+					& 
+					\begin{bmatrix}
+						-I_1^{-1}r_{1_y}-I_2^{-1}r_{2_y}\\
+						I_1^{-1}r_{1_x}+I_2^{-1}r_{2_x}
+					\end{bmatrix}\\
+					\begin{bmatrix}
+						-I_1^{-1}r_{1_y}-I_2^{-1}r_{2_y}	&	I_1^{-1}r_{1_x}+I_2^{-1}r_{2_x}
+					\end{bmatrix}
+					 & I_1^{-1} + I_2^{-1}
+				\end{bmatrix}\\		
+				&=
+				\begin{bmatrix}
+						M_1^{-1} + M_2^{-1} + I_1^{-1}r_{1_y}^2 + I_2^{-1}r_{2_y}^2 & -I_1^{-1}r_{1_y}r_{1_x} - I_2^{-1}r_{2_y}r_{2_x} &-I_1^{-1}r_{1_y}-I_2^{-1}r_{2_y}\\
+						-I_1^{-1}r_{1_x}r_{1_y}-I_2^{-1}r_{2_x}r_{2_y} & M_1^{-1} + M_2^{-1} + I_1^{-1}r_{1_x}^2 +  I_2^{-1}r_{2_x}^2 & I_1^{-1}r_{1_x}+I_2^{-1}r_{2_x} \\
+						-I_1^{-1}r_{1_y}-I_2^{-1}r_{2_y} &I_1^{-1}r_{1_x}+I_2^{-1}r_{2_x} & I_1^{-1} + I_2^{-1}
+				\end{bmatrix}	
+		\end{align*}
+	\subsubsection{Solved velocity}
+		\begin{align*}
+			v_{res}&=v_{imp}+M^{-1}J^T\lambda=
+			\begin{bmatrix}
+				v_1\\
+				\omega_1\\
+				v2\\
+				\omega_2
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				-M_1^{-1} & 0\\
+				-I_1^{-1}[r_1]_\times^T & -I_1^{-1}\\
+				M_2^{-1} & 0\\
+				I_2^{-1}[r_2]_\times^T & I_2^{-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				\begin{pmatrix}
+					\lambda_1\\
+					\lambda_2\\					
+				\end{pmatrix}\\
+				\lambda_3
+			\end{bmatrix}\\
+			&=
+			\begin{bmatrix}
+				-M_1^{-1}
+				\begin{pmatrix}
+					\lambda_1\\
+					\lambda_2\\					
+				\end{pmatrix}\\
+				-I_1^{-1}(r_{1_x}\lambda_2 - r_{1_y}\lambda_1) -I_1^{-1}\lambda_3\\
+				M_2^{-1}
+				\begin{pmatrix}
+					\lambda_1\\
+					\lambda_2\\					
+				\end{pmatrix}\\
+				I_2^{-1}(r_{2_x}\lambda_2 - r_{2_y}\lambda_1) +I_2^{-1}\lambda_3\\
+			\end{bmatrix}
+		\end{align*}
+	\newpage
+	\subsection{Mouse Constraint}
+	Let be $r$ is an arbiraty point on a body, and $m$ is the current position of the cursor.
+	\subsubsection{Position constraint}
+	$$
+		C = p - m
+	$$
+	\subsubsection{Velocity constraint}
+	\begin{align}
+		C^{'} &= (r - m)^{'} = r^{'} - m^{'} = r^{'} - 0 = r^{'}\\
+		C^{'} &= v + (\omega \times r)\\
+		C^{'} &= \boxed{(1)} v + \boxed{[r]_{\times}} \omega
+	\end{align}	
+	\subsubsection{Jacobian matrix}
+	$$
+		J =
+		\begin{bmatrix}
+			\boldsymbol{I_2} & [r]_{\times}
+		\end{bmatrix}
+	$$
+	\subsubsection{Coeficent of $\lambda$}
+	\begin{align*}
+		M^{-1}J^T 
+		&=	
+		\begin{bmatrix}
+			M_1^{-1} 	& 0\\
+			0 			& I_1^{-1}\\
+		\end{bmatrix}
+		\begin{bmatrix}
+			\boldsymbol{I_2}\\
+			[r]_{\times}^T
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			\boldsymbol{I_2} M_1^{-1}\\
+			I_1^{-1} [r]_{\times}^T
+		\end{bmatrix}
+	\end{align*}
+	\subsubsection{Effective mass}
+	\begin{align*}
+		M_{eff}
+		&=JM^{-1}J^T=
+		\begin{bmatrix}
+			\boldsymbol{I_2} & [r]_{\times}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\boldsymbol{I_2} M_1^{-1}\\
+			I_1^{-1} [r]_{\times}^T
+		\end{bmatrix}\\
+		&= \boldsymbol{I_2} M_1^{-1} + I_1^{-1} [r]_{\times} [r]_{\times}^T\\
+		&= 
+		\begin{bmatrix}
+			M_1^{-1} 	& 0\\
+			0 			& M_1^{-1}\\
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			I_1^{-1} r_y^2		& -I_1^{-1} r_x r_y\\
+			-I_1^{-1} r_x r_y	& I_1^{-1} r_x^2\\
+		\end{bmatrix}\\
+		&= 
+		\begin{bmatrix}
+			M_1^{-1} + I_1^{-1} r_y^2		& -I_1^{-1} r_x r_y\\
+			-I_1^{-1} r_x r_y	& M_1^{-1} + I_1^{-1} r_x^2\\
+		\end{bmatrix}\\
+	\end{align*}
+	\subsubsection{Solved velocity}
+	\begin{align*}
+		v_{res}
+		&=v_{imp}+M^{-1}J^T\lambda=
+		\begin{bmatrix}
+			v\\
+			\omega
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			\boldsymbol{I_2} M_1^{-1}\\
+			I_1^{-1} [r]_{\times}^T
+		\end{bmatrix} \lambda \\
+		&= 
+		\begin{bmatrix}
+			v\\
+			\omega
+		\end{bmatrix}
+		+
+		\begin{bmatrix}
+			\lambda M_1^{-1}\\
+			I^{-1} (\lambda_2 r_x - \lambda_1 r_y)
+		\end{bmatrix}
+	\end{align*}
+	\newpage
+	\section{Soft constraints}
+	From Newton's law
+	$$
+		F = ma
+	$$
+	The $a$ acceleration is the velocity change in a given $h$ time step
+	\begin{align}
+		a &= \Delta v = v_2 - v_1\\
+		F &= m(v_2 - v_1)
+	\end{align}
+	Velocity constraint with softness and Baumgarte
+	$$
+		Jv_2 + softness\lambda + bias = 0
+	$$
+	Where 
+	$$
+		bias = biasFactor * C^{'}	
+	$$
+	The only missing thins are $v_2$ and $\lambda$.
+	$$
+		v_2 = v_1 + M^{-1}J^T\lambda
+	$$
+	Substitue back this to the velocity constraint
+	$$
+		J(v_1 + M^{-1}J^T\lambda) + softness\lambda + bias = 0
+	$$
+	Coefficients of $\lambda$
+	$$
+		(JM^{-1}J^T + softness)\lambda = -Jv_1 - bias
+	$$
+	Effective mass
+	$$
+		M_{eff}	 = \frac{1}{JM^{-1}J^T + softness}
+	$$
+	Thus
+	\begin{align*}
+		&M(v_{2_{new}} - v_{2_{damaged}}) = J^TP_d\\
+		&Jv_{2_{new}} + softness(P + P_d) + bias = 0\\
+		&v_{2_{new}} = v_{2_{damaged}} + M^{-1}J^TP_d\\
+		&J(v_{2_{damaged}} + M^{-1}J^TP_d) + softness * P + softness * P_d + bias = 0\\
+		&(JM^{-1}J^T + softness)P_d = -(Jv_{2_{damaged}} + softness * P + bias)
+	\end{align*}
+	\newpage
+\end{document}

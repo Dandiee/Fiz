@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44EAEE90-2539-41EC-8D9D-7AE59A421BF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Physics</RootNamespace>
+    <AssemblyName>Physics</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bodies\BodyDefinition.cs" />
+    <Compile Include="Bodies\ClipableBody.cs" />
+    <Compile Include="BodyConnection.BlockSolver.partial.cs" />
+    <Compile Include="BodyConnection.cs" />
+    <Compile Include="Bodies\Body.cs" />
+    <Compile Include="Bodies\Circle.cs" />
+    <Compile Include="Bodies\Polygon.cs" />
+    <Compile Include="BodyConnection.partial.cs" />
+    <Compile Include="CollisionImmunityGroup.cs" />
+    <Compile Include="Collisions\CollisionCircleCircle.cs" />
+    <Compile Include="Collisions\Collision.cs" />
+    <Compile Include="Collisions\CollisionSegmentCircle.cs" />
+    <Compile Include="Collisions\CollisionPolygonCircle.cs" />
+    <Compile Include="Collisions\CollisionClipableClipable.cs" />
+    <Compile Include="Collisions\Manifolds\Manifold.cs" />
+    <Compile Include="Collisions\Manifolds\ManifoldPoint.cs" />
+    <Compile Include="Collisions\Polygons\Detector\Penetration.cs" />
+    <Compile Include="Collisions\Polygons\Detector\Epa.cs" />
+    <Compile Include="Collisions\Polygons\Detector\ExpandingSimplex.cs" />
+    <Compile Include="Collisions\Polygons\Detector\ExpandingSimplexEdge.cs" />
+    <Compile Include="Collisions\Polygons\Detector\Gjk.cs" />
+    <Compile Include="Collisions\Polygons\Detector\GjkResult.cs" />
+    <Compile Include="Collisions\Polygons\Detector\MinkowskiSum.cs" />
+    <Compile Include="Collisions\Polygons\Clipping\ClippingEdgeResult.cs" />
+    <Compile Include="Collisions\Polygons\Clipping\ClippingManifoldSolver.cs" />
+    <Compile Include="Collisions\Polygons\Clipping\ClippingVertexResult.cs" />
+    <Compile Include="Helpers\BodyBuilder.cs" />
+    <Compile Include="Hierarchy\CostBoundingVolume.cs" />
+    <Compile Include="Hierarchy\ICost.cs" />
+    <Compile Include="Hierarchy\Node.cs" />
+    <Compile Include="Joints\AngleJoint.cs" />
+    <Compile Include="Joints\DistanceJoint.cs" />
+    <Compile Include="Joints\Joint.cs" />
+    <Compile Include="Joints\LineJoint.cs" />
+    <Compile Include="Joints\LinearMotorJoint.cs" />
+    <Compile Include="Joints\AngularMotorJoint.cs" />
+    <Compile Include="Joints\MouseJoint.cs" />
+    <Compile Include="Joints\PrismaticJoint.cs" />
+    <Compile Include="Joints\PulleyJoint.cs" />
+    <Compile Include="Joints\RevoluteJoint.cs" />
+    <Compile Include="Joints\WeldJoint.cs" />
+    <Compile Include="Joints\GenericJoint.cs" />
+    <Compile Include="Bodies\Segment.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Tree.cs" />
+    <Compile Include="Hierarchy\Tree.cs" />
+    <Compile Include="World.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{850abb40-71cc-4a71-9d5d-62da8f638706}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Documentation\RigidBodyDynamics.tex" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
