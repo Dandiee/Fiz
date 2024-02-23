@@ -26,11 +26,14 @@ namespace TestBed.WinForms
 
         private void InitializeControllers()
         {
-            RegisterScenario(Keys.F1, world => new BoundingVolumeHierarchyScenario(world),
-                new Func<BoundingVolumeHierarchyScenario, IInputController>[]
-                {
-                    scenario => new MouseButton(MouseButtons.Middle, MouseButtonStates.Pressed, (s) => scenario.CreateBox(_camera.UnprojectScreenPosition(new Vector2(s.X, s.Y))))
-                });
+            //RegisterScenario(Keys.F1, world => new BoundingVolumeHierarchyScenario(world),
+            //    new Func<BoundingVolumeHierarchyScenario, IInputController>[]
+            //    {
+            //        scenario => new MouseButton(MouseButtons.Middle, MouseButtonStates.Pressed, (s) => scenario.CreateBox(_camera.UnprojectScreenPosition(new Vector2(s.X, s.Y))))
+            //    });
+
+            RegisterScenario(Keys.F1, world => new PinJointScenario(world));
+
 
             RegisterScenario(Keys.F3, world => new BoxPyramidScenario(world), 
                 new Func<BoxPyramidScenario, IInputController>[]
@@ -77,7 +80,7 @@ namespace TestBed.WinForms
             //RegisterScenario(Keys.F2, world => new BallBathScenario(world));
             
             RegisterScenario(Keys.F4, world => new DominoScenario(world));
-            RegisterScenario(Keys.F5, world => new PinJointScenario(world));
+            
           
 
             RegisterScenario(Keys.F7, world => new SuspendedVehicleScenario(world));
